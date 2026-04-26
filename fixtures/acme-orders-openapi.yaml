@@ -1,0 +1,754 @@
+openapi: 3.1.0
+info:
+  title: ACME Orders API
+  version: 1.2.0
+  summary: Manage customers and orders for ACME.
+  description: 'ACME Orders API provides endpoints to create, update, list, retrieve,
+    and delete customers and orders. This specification is tuned for AI agents by
+    providing strong typing, clear descriptions, abundant examples, standardized errors
+    (RFC 9457 Problem Details), explicit policy metadata (rate limits/SLA), and AI-oriented
+    intent/workflow hints.
+
+    '
+  x-summary: ACME Orders API
+externalDocs:
+  description: ACME API overview, guides, and best practices.
+  url: https://developer.acme.example/docs/orders-api
+  summary: ACME API docs
+  x-summary: ACME API docs
+x-registry:
+  llms_txt: https://developer.acme.example/llms.txt
+  apis_json: https://developer.acme.example/apis.json
+  mcp:
+    server_name: acme-orders
+    discovery_url: https://developer.acme.example/mcp/acme-orders
+servers:
+- url: https://api.acme.example/v1
+  description: Production (public HTTPS endpoint)
+  summary: ACME API server 1
+  x-summary: ACME API server 1
+tags:
+- name: Customers
+  description: Create, update, list, retrieve, and delete customer records.
+  x-domain-tags:
+  - commerce
+  - crm
+  x-summary: Create, update, list, retrieve, and delete customer records.
+  summary: Customers endpoints
+- name: Orders
+  description: Create, update, list, retrieve, and cancel order records.
+  x-domain-tags:
+  - commerce
+  - orders
+  x-summary: Create, update, list, retrieve, and cancel order records.
+  summary: Orders endpoints
+security:
+- OAuth2:
+  - customers:read
+  - customers:write
+  - orders:read
+  - orders:write
+paths:
+  /customers:
+    post:
+      tags:
+      - Customers
+      summary: Create a customer
+      description: Create a new customer record.
+      operationId: createCustomer
+      x-intent: Create a new customer profile to associate with future orders.
+      x-workflow:
+      - Customer onboarding
+      - 'Checkout: first-time buyer'
+      x-policy:
+        audience: public
+        sla: 99.9% monthly availability
+        rate_limit:
+          bucket: write
+          requests_per_minute: 120
+        idempotency:
+          supported: false
+          note: Customer creation is not idempotent; if you need safe retries, prefer
+            a client-generated external_ref and de-duplication on your side.
+      requestBody:
+        required: true
+        description: Customer fields to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerRequest'
+            examples:
+              create_customer:
+                summary: Create a customer
+                value:
+                  name: Jane Doe
+                  email: jane.doe@example.com
+      responses:
+        '201':
+          description: Customer created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+              examples:
+                customer_created:
+                  summary: Created customer response
+                  value:
+                    id: cus_01HX9P2C7YQ2GQ7P9R8F2H2Z7A
+                    name: Jane Doe
+                    email: jane.doe@example.com
+                    created_at: '2026-02-21T20:00:00Z'
+                    updated_at: '2026-02-21T20:00:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequestProblem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedProblem'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsProblem'
+    get:
+      tags:
+      - Customers
+      summary: List customers
+      description: Returns a paginated list of customers.
+      operationId: listCustomers
+      x-intent: Search or browse customers.
+      x-policy:
+        audience: public
+        rate_limit:
+          bucket: read
+          requests_per_minute: 600
+        caching:
+          recommended_ttl_seconds: 30
+      parameters:
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Cursor'
+      - name: email
+        in: query
+        required: false
+        description: Filter by exact email match.
+        schema:
+          type: string
+          format: email
+      responses:
+        '200':
+          description: Customers list returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerList'
+        '400':
+          $ref: '#/components/responses/BadRequestProblem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedProblem'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsProblem'
+  /customers/{customer_id}:
+    get:
+      tags:
+      - Customers
+      summary: Retrieve a customer
+      description: Retrieve a customer by ID.
+      operationId: getCustomer
+      x-policy:
+        rate_limit:
+          bucket: read
+          requests_per_minute: 600
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          description: Customer retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/UnauthorizedProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsProblem'
+    patch:
+      tags:
+      - Customers
+      summary: Update a customer (partial)
+      operationId: updateCustomer
+      x-policy:
+        rate_limit:
+          bucket: write
+          requests_per_minute: 120
+        idempotency:
+          supported: true
+          header: Idempotency-Key
+          window_hours: 24
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerRequest'
+      responses:
+        '200':
+          description: Customer updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          $ref: '#/components/responses/BadRequestProblem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsProblem'
+    delete:
+      tags:
+      - Customers
+      summary: Delete a customer
+      operationId: deleteCustomer
+      x-policy:
+        rate_limit:
+          bucket: write
+          requests_per_minute: 60
+        safety:
+          irreversible: true
+      parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '204':
+          description: Customer deleted successfully (no content).
+        '401':
+          $ref: '#/components/responses/UnauthorizedProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsProblem'
+  /orders:
+    post:
+      tags:
+      - Orders
+      summary: Create an order
+      operationId: createOrder
+      x-policy:
+        rate_limit:
+          bucket: write
+          requests_per_minute: 120
+        idempotency:
+          supported: true
+          header: Idempotency-Key
+          window_hours: 24
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+            examples:
+              create_order:
+                summary: Create an order with one item
+                value:
+                  customer_id: cus_01HX9P2C7YQ2GQ7P9R8F2H2Z7A
+                  items:
+                  - sku: sku_anvil_001
+                    quantity: 1
+                    unit_amount: 1999
+      responses:
+        '201':
+          description: Order created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequestProblem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsProblem'
+    get:
+      tags:
+      - Orders
+      summary: List orders
+      operationId: listOrders
+      x-policy:
+        rate_limit:
+          bucket: read
+          requests_per_minute: 600
+        caching:
+          recommended_ttl_seconds: 15
+      parameters:
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Cursor'
+      - name: customer_id
+        in: query
+        required: false
+        description: Filter orders by customer ID.
+        schema:
+          $ref: '#/components/schemas/CustomerId'
+      - name: status
+        in: query
+        required: false
+        description: Filter orders by status.
+        schema:
+          $ref: '#/components/schemas/OrderStatus'
+      responses:
+        '200':
+          description: Orders list returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderList'
+        '400':
+          $ref: '#/components/responses/BadRequestProblem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedProblem'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsProblem'
+  /orders/{order_id}:
+    get:
+      tags:
+      - Orders
+      summary: Retrieve an order
+      operationId: getOrder
+      x-policy:
+        rate_limit:
+          bucket: read
+          requests_per_minute: 600
+      parameters:
+      - $ref: '#/components/parameters/OrderId'
+      responses:
+        '200':
+          description: Order retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/UnauthorizedProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsProblem'
+    patch:
+      tags:
+      - Orders
+      summary: Update an order (partial)
+      operationId: updateOrder
+      x-policy:
+        rate_limit:
+          bucket: write
+          requests_per_minute: 120
+        idempotency:
+          supported: true
+          header: Idempotency-Key
+          window_hours: 24
+      parameters:
+      - $ref: '#/components/parameters/OrderId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrderRequest'
+            examples:
+              mark_paid:
+                summary: Mark order as paid
+                value:
+                  status: paid
+      responses:
+        '200':
+          description: Order updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequestProblem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsProblem'
+    delete:
+      tags:
+      - Orders
+      summary: Cancel an order
+      operationId: cancelOrder
+      x-policy:
+        rate_limit:
+          bucket: write
+          requests_per_minute: 60
+        safety:
+          irreversible: false
+      parameters:
+      - $ref: '#/components/parameters/OrderId'
+      responses:
+        '204':
+          description: Order cancelled successfully (no content).
+        '401':
+          $ref: '#/components/responses/UnauthorizedProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsProblem'
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: OAuth2 Client Credentials flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.acme.example/oauth2/token
+          scopes:
+            customers:read: Read customer records
+            customers:write: Create/update/delete customers
+            orders:read: Read order records
+            orders:write: Create/update/cancel orders
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: Idempotency key for safe retries. Reusing same key with different payload within 24 hours returns 409.
+      schema:
+        type: string
+        minLength: 8
+        maxLength: 128
+      example: 7b2f3d1a-9b8a-4f21-8d7a-12a3b4c5d6e7
+    Limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return. Default 20, max 100.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      description: Opaque cursor for pagination. Use the next_cursor returned by list endpoints.
+      schema:
+        type: string
+    CustomerId:
+      name: customer_id
+      in: path
+      required: true
+      description: The customer identifier.
+      schema:
+        $ref: '#/components/schemas/CustomerId'
+      example: cus_01HX9P2C7YQ2GQ7P9R8F2H2Z7A
+    OrderId:
+      name: order_id
+      in: path
+      required: true
+      description: The order identifier.
+      schema:
+        $ref: '#/components/schemas/OrderId'
+      example: ord_01HX9Q0M5Z6YB7R6C2D3E4F5G6
+  responses:
+    BadRequestProblem:
+      description: The request was invalid (validation failed).
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            validation_error:
+              value:
+                type: https://api.acme.example/problems/validation-error
+                title: Validation error
+                status: 400
+                detail: Request validation failed.
+                instance: /v1/customers
+                errors:
+                - field: email
+                  code: invalid_format
+                  message: Must be a valid email address.
+                request_id: req_01HX9R2EXAMPLE
+    UnauthorizedProblem:
+      description: Missing or invalid authentication.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            unauthorized:
+              value:
+                type: https://api.acme.example/problems/unauthorized
+                title: Unauthorized
+                status: 401
+                detail: Authentication required.
+                instance: /v1/orders
+                request_id: req_01HX9R2EXAMPLE
+    NotFoundProblem:
+      description: The requested resource was not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            not_found:
+              value:
+                type: https://api.acme.example/problems/not-found
+                title: Not found
+                status: 404
+                detail: Resource not found.
+                instance: /v1/customers/cus_...
+                request_id: req_01HX9R2EXAMPLE
+    ConflictProblem:
+      description: The request could not be completed due to a conflict.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            idempotency_conflict:
+              value:
+                type: https://api.acme.example/problems/idempotency-conflict
+                title: Conflict
+                status: 409
+                detail: Idempotency-Key was reused with a different request payload.
+                instance: /v1/orders
+                request_id: req_01HX9R2EXAMPLE
+    TooManyRequestsProblem:
+      description: Rate limit exceeded. Retry after the indicated time.
+      headers:
+        Retry-After:
+          description: Seconds to wait before retrying.
+          schema:
+            type: integer
+          example: 2
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            rate_limited:
+              value:
+                type: https://api.acme.example/problems/rate-limited
+                title: Too Many Requests
+                status: 429
+                detail: Too many requests. Please retry later.
+                retry_after_seconds: 2
+                request_id: req_01HX9R2EXAMPLE
+  schemas:
+    CustomerId:
+      type: string
+      description: Unique customer identifier.
+      example: cus_01HX9P2C7YQ2GQ7P9R8F2H2Z7A
+    OrderId:
+      type: string
+      description: Unique order identifier.
+      example: ord_01HX9Q0M5Z6YB7R6C2D3E4F5G6
+    OrderStatus:
+      type: string
+      enum: [created, paid, fulfilled, cancelled]
+      example: created
+    Customer:
+      type: object
+      required: [id, name, email, created_at, updated_at]
+      properties:
+        id:
+          $ref: '#/components/schemas/CustomerId'
+        name:
+          type: string
+          minLength: 1
+          example: Jane Doe
+        email:
+          type: string
+          format: email
+          example: jane.doe@example.com
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        _links:
+          $ref: '#/components/schemas/Links'
+    CreateCustomerRequest:
+      type: object
+      required: [name, email]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: Jane Doe
+        email:
+          type: string
+          format: email
+          example: jane.doe@example.com
+    UpdateCustomerRequest:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          format: email
+    OrderItem:
+      type: object
+      required: [sku, quantity, unit_amount]
+      properties:
+        sku:
+          type: string
+          minLength: 1
+          example: sku_anvil_001
+        quantity:
+          type: integer
+          minimum: 1
+          example: 1
+        unit_amount:
+          type: integer
+          minimum: 0
+          example: 1999
+    Order:
+      type: object
+      required: [id, customer_id, status, amount_total, items, created_at, updated_at]
+      properties:
+        id:
+          $ref: '#/components/schemas/OrderId'
+        customer_id:
+          $ref: '#/components/schemas/CustomerId'
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        amount_total:
+          type: integer
+          minimum: 0
+          example: 1999
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        _links:
+          $ref: '#/components/schemas/Links'
+    CreateOrderRequest:
+      type: object
+      required: [customer_id, items]
+      properties:
+        customer_id:
+          $ref: '#/components/schemas/CustomerId'
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    UpdateOrderRequest:
+      type: object
+      minProperties: 1
+      properties:
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+    ProblemError:
+      type: object
+      required: [field, code, message]
+      properties:
+        field:
+          type: string
+          example: email
+        code:
+          type: string
+          example: invalid_format
+        message:
+          type: string
+          example: Must be a valid email address.
+    ProblemDetails:
+      type: object
+      description: RFC 9457 Problem Details object. Returned as application/problem+json.
+      required: [type, title, status, detail, instance]
+      properties:
+        type:
+          type: string
+          format: uri
+          example: https://api.acme.example/problems/validation-error
+        title:
+          type: string
+          example: Validation error
+        status:
+          type: integer
+          example: 400
+        detail:
+          type: string
+          example: Request validation failed.
+        instance:
+          type: string
+          example: /v1/customers
+        request_id:
+          type: string
+          example: req_01HX9R2EXAMPLE
+        retry_after_seconds:
+          type: integer
+          example: 2
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProblemError'
+    Link:
+      type: object
+      required: [href]
+      properties:
+        href:
+          type: string
+          format: uri
+    Links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Link'
+    CustomerList:
+      type: object
+      required: [data, next_cursor]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        next_cursor:
+          type: [string, 'null']
+          example: null
+        _links:
+          $ref: '#/components/schemas/Links'
+    OrderList:
+      type: object
+      required: [data, next_cursor]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        next_cursor:
+          type: [string, 'null']
+          example: null
+        _links:
+          $ref: '#/components/schemas/Links'
