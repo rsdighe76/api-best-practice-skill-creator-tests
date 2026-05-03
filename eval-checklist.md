@@ -10,7 +10,7 @@ Generated files should land in `test-output/acme-orders-best-practices/`.
 - [ ] `SKILL.md` exists at the root
 - [ ] `shared/error-codes.md` exists
 - [ ] `endpoints/` directory exists
-- [ ] Exactly 8 endpoint files exist (one per operation):
+- [ ] Exactly 10 endpoint files exist (one per operation):
   - [ ] `POST-customers.md`
   - [ ] `GET-customers.md`
   - [ ] `GET-customers-{customer_id}.md`
