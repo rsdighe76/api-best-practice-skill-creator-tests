@@ -11,27 +11,27 @@ Validates and guides ACME Orders API integrations. Paste a request, code snippet
 
 | Building... | Load this file |
 |---|---|
-| Creating a customer | `endpoints/POST-customers.md` |
-| Listing or searching customers | `endpoints/GET-customers.md` |
-| Retrieving a customer by ID | `endpoints/GET-customers-customer_id.md` |
-| Updating a customer | `endpoints/PATCH-customers-customer_id.md` |
-| Deleting a customer | `endpoints/DELETE-customers-customer_id.md` |
-| Placing an order | `endpoints/POST-orders.md` |
-| Listing or filtering orders | `endpoints/GET-orders.md` |
-| Retrieving an order by ID | `endpoints/GET-orders-order_id.md` |
-| Advancing order status (paid, fulfilled) | `endpoints/PATCH-orders-order_id.md` |
-| Cancelling an order | `endpoints/DELETE-orders-order_id.md` |
-| Setting up credentials, tokens, or auth | `shared/authentication.md` |
-| Handling errors, retries, or rate limits | `shared/error-codes.md` |
-| Multi-step workflows or lifecycle patterns | `shared/workflows.md` |
+| Creating a customer | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/endpoints/POST-customers.md` |
+| Listing or searching customers | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/endpoints/GET-customers.md` |
+| Retrieving a customer by ID | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/endpoints/GET-customers-customer_id.md` |
+| Updating a customer | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/endpoints/PATCH-customers-customer_id.md` |
+| Deleting a customer | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/endpoints/DELETE-customers-customer_id.md` |
+| Placing an order | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/endpoints/POST-orders.md` |
+| Listing or filtering orders | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/endpoints/GET-orders.md` |
+| Retrieving an order by ID | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/endpoints/GET-orders-order_id.md` |
+| Advancing order status (paid, fulfilled) | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/endpoints/PATCH-orders-order_id.md` |
+| Cancelling an order | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/endpoints/DELETE-orders-order_id.md` |
+| Setting up credentials, tokens, or auth | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/authentication.md` |
+| Handling errors, retries, or rate limits | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/error-codes.md` |
+| Multi-step workflows or lifecycle patterns | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/workflows.md` |
 
 ## When to Load Which File
 
-- **Auth setup, credentials, token acquisition** → load `shared/authentication.md`
-- **Error codes, retry logic, rate limits** → load `shared/error-codes.md`
-- **Multi-step workflows, lifecycle patterns** → load `shared/workflows.md`
-- **Any customer operation** → load the matching `endpoints/` file above
-- **Any order operation** → load the matching `endpoints/` file above
+- **Auth setup, credentials, token acquisition** → load `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/authentication.md`
+- **Error codes, retry logic, rate limits** → load `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/error-codes.md`
+- **Multi-step workflows, lifecycle patterns** → load `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/workflows.md`
+- **Any customer operation** → load the matching `endpoints/` URL from the table above
+- **Any order operation** → load the matching `endpoints/` URL from the table above
 
 Validate a **single request (curl/JSON)** → check request structure only.
 Validate **full code** → check request + error handling + retries + timeouts.

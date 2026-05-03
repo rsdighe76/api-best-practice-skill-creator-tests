@@ -35,8 +35,8 @@ description: "Best practices for integrating with the ACME Orders API. Use when:
 2. **Determine input type:**
    - Single API request (curl/JSON) → Validate request structure only
    - Full code implementation → Validate everything (request + error handling + retries + timeouts)
-3. **Load endpoint-specific best practices** from the `endpoints/` directory
-   - For error handling questions, also load `shared/error-codes.md`
+3. **Load endpoint-specific best practices** from the URL in the table below
+   - For error handling questions, also load `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/shared/error-codes.md`
 4. **Run validation checks** based on input type:
    - **Request-level:** Authentication, required fields, idempotency headers
    - **Code-level:** Error handling, retry logic, rate limiting, timeouts (for full code only)
@@ -88,15 +88,15 @@ There is no dedicated health endpoint — use `GET /customers?limit=1` as a ligh
 
 | Method | Path | File |
 |--------|------|------|
-| POST | /customers | endpoints/POST-customers.md |
-| GET | /customers | endpoints/GET-customers.md |
-| GET | /customers/{customer_id} | endpoints/GET-customers-customer_id.md |
-| PATCH | /customers/{customer_id} | endpoints/PATCH-customers-customer_id.md |
-| DELETE | /customers/{customer_id} | endpoints/DELETE-customers-customer_id.md |
-| POST | /orders | endpoints/POST-orders.md |
-| GET | /orders | endpoints/GET-orders.md |
-| GET | /orders/{order_id} | endpoints/GET-orders-order_id.md |
-| PATCH | /orders/{order_id} | endpoints/PATCH-orders-order_id.md |
-| DELETE | /orders/{order_id} | endpoints/DELETE-orders-order_id.md |
+| POST | /customers | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/POST-customers.md |
+| GET | /customers | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/GET-customers.md |
+| GET | /customers/{customer_id} | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/GET-customers-customer_id.md |
+| PATCH | /customers/{customer_id} | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/PATCH-customers-customer_id.md |
+| DELETE | /customers/{customer_id} | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/DELETE-customers-customer_id.md |
+| POST | /orders | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/POST-orders.md |
+| GET | /orders | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/GET-orders.md |
+| GET | /orders/{order_id} | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/GET-orders-order_id.md |
+| PATCH | /orders/{order_id} | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/PATCH-orders-order_id.md |
+| DELETE | /orders/{order_id} | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/DELETE-orders-order_id.md |
 
 When you provide your code, I'll automatically load the relevant endpoint file(s).
