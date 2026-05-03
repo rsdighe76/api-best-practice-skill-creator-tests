@@ -15,14 +15,13 @@ description: "Best practices for integrating with the ACME Orders API. Use when:
 3. Copy/paste your code snippet
 
 **Authoritative Source:**
-- This skill uses ONLY the best practices defined in this skill
-- All validation rules come from the official ACME API specification
-- No web searches or external docs — ensuring accuracy
+- All validation rules come from the endpoint spec files linked in the table below
+- You MUST fetch the relevant URL(s) before validating — do not validate without reading the spec content first
 
 **What happens next:**
 1. I'll identify which endpoint(s) you're calling
-2. Load the best practices for that endpoint
-3. Validate your implementation
+2. Fetch the best practices URL for that endpoint from the table below
+3. Validate your implementation against the fetched content
 4. Report any issues with specific recommendations
 
 ---
@@ -35,8 +34,8 @@ description: "Best practices for integrating with the ACME Orders API. Use when:
 2. **Determine input type:**
    - Single API request (curl/JSON) → Validate request structure only
    - Full code implementation → Validate everything (request + error handling + retries + timeouts)
-3. **Load endpoint-specific best practices** from the URL in the table below
-   - For error handling questions, also load `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/shared/error-codes.md`
+3. **Fetch endpoint-specific best practices** from the URL in the table below using your fetch/browse capability
+   - For error handling questions, also fetch `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/shared/error-codes.md`
 4. **Run validation checks** based on input type:
    - **Request-level:** Authentication, required fields, idempotency headers
    - **Code-level:** Error handling, retry logic, rate limiting, timeouts (for full code only)
@@ -99,4 +98,4 @@ There is no dedicated health endpoint — use `GET /customers?limit=1` as a ligh
 | PATCH | /orders/{order_id} | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/PATCH-orders-order_id.md |
 | DELETE | /orders/{order_id} | https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices/endpoints/DELETE-orders-order_id.md |
 
-When you provide your code, I'll automatically load the relevant endpoint file(s).
+When you provide your code, I'll fetch the relevant endpoint URL(s) from the table above before validating.

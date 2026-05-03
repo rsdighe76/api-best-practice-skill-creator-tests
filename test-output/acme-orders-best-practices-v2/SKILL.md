@@ -5,7 +5,9 @@ description: "TRIGGER when: developer is calling POST /customers, POST /orders, 
 
 **API version:** 1.2.0. Always use this version unless the user specifies otherwise.
 
-Validates and guides ACME Orders API integrations. Paste a request, code snippet, or describe what you're building — I'll load the relevant file and validate or guide.
+Validates and guides ACME Orders API integrations. Paste a request, code snippet, or describe what you're building — I'll fetch the relevant spec and validate or guide.
+
+**IMPORTANT — How to load files:** The URLs in this skill point to the full endpoint specs on GitHub. Before validating any request or code, you MUST fetch the relevant URL(s) using your web browsing or fetch capability. Do not attempt to validate without first retrieving the spec content from the URL.
 
 ## What Are You Building?
 
@@ -27,11 +29,13 @@ Validates and guides ACME Orders API integrations. Paste a request, code snippet
 
 ## When to Load Which File
 
-- **Auth setup, credentials, token acquisition** → load `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/authentication.md`
-- **Error codes, retry logic, rate limits** → load `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/error-codes.md`
-- **Multi-step workflows, lifecycle patterns** → load `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/workflows.md`
-- **Any customer operation** → load the matching `endpoints/` URL from the table above
-- **Any order operation** → load the matching `endpoints/` URL from the table above
+Use your fetch/browse capability to retrieve the content at these URLs before validating:
+
+- **Auth setup, credentials, token acquisition** → fetch `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/authentication.md`
+- **Error codes, retry logic, rate limits** → fetch `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/error-codes.md`
+- **Multi-step workflows, lifecycle patterns** → fetch `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/test-output/acme-orders-best-practices-v2/shared/workflows.md`
+- **Any customer operation** → fetch the matching `endpoints/` URL from the table above
+- **Any order operation** → fetch the matching `endpoints/` URL from the table above
 
 Validate a **single request (curl/JSON)** → check request structure only.
 Validate **full code** → check request + error handling + retries + timeouts.
