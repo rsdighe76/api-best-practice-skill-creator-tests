@@ -8,7 +8,9 @@ Generated files should land in `test-output/acme-orders-best-practices/`.
 ## Structure
 
 - [ ] `SKILL.md` exists at the root
+- [ ] `shared/authentication.md` exists
 - [ ] `shared/error-codes.md` exists
+- [ ] `shared/workflows.md` exists
 - [ ] `endpoints/` directory exists
 - [ ] Exactly 10 endpoint files exist (one per operation):
   - [ ] `POST-customers.md`
@@ -28,9 +30,16 @@ Generated files should land in `test-output/acme-orders-best-practices/`.
 
 - [ ] Frontmatter has `name` and `description`
 - [ ] Description mentions ACME Orders API (not a generic placeholder)
-- [ ] No `example.com` URLs — all URLs use `api.acme.example`
-- [ ] Lists all 8 endpoints with links to their files
-- [ ] References `shared/error-codes.md` for error handling questions
+- [ ] `**API version:** 1.2.0` present as first content line after frontmatter
+- [ ] No `example.com` API URLs — all use `api.acme.example`
+- [ ] `shared/authentication.md` referenced in routing table
+- [ ] `shared/error-codes.md` referenced in routing table
+- [ ] `shared/workflows.md` referenced in routing table
+- [ ] Lists all 10 endpoints with links to their files
+
+**Deployment target check (pick one):**
+- [ ] **Claude Code deployment:** routing table uses relative paths (`endpoints/POST-customers.md`)
+- [ ] **Claude.ai deployment:** routing table uses GitHub raw URLs (`https://raw.githubusercontent.com/...`) AND includes "IMPORTANT: fetch these URLs" instruction
 
 ---
 
