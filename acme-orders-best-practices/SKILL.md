@@ -15,14 +15,14 @@ Validates and guides ACME Orders API integrations. Paste a request, code snippet
 |---|---|
 | Creating a new customer | `endpoints/POST-v1-customers.md` |
 | Listing or searching customers | `endpoints/GET-v1-customers.md` |
-| Retrieving a single customer | `endpoints/GET-v1-customers-{customer_id}.md` |
-| Updating a customer | `endpoints/PATCH-v1-customers-{customer_id}.md` |
-| Deleting a customer | `endpoints/DELETE-v1-customers-{customer_id}.md` |
+| Retrieving a single customer | `endpoints/GET-v1-customers-customer_id.md` |
+| Updating a customer | `endpoints/PATCH-v1-customers-customer_id.md` |
+| Deleting a customer | `endpoints/DELETE-v1-customers-customer_id.md` |
 | Creating a new order | `endpoints/POST-v1-orders.md` |
 | Listing or filtering orders | `endpoints/GET-v1-orders.md` |
-| Retrieving a single order | `endpoints/GET-v1-orders-{order_id}.md` |
-| Updating order status or fields | `endpoints/PATCH-v1-orders-{order_id}.md` |
-| Cancelling an order | `endpoints/DELETE-v1-orders-{order_id}.md` |
+| Retrieving a single order | `endpoints/GET-v1-orders-order_id.md` |
+| Updating order status or fields | `endpoints/PATCH-v1-orders-order_id.md` |
+| Cancelling an order | `endpoints/DELETE-v1-orders-order_id.md` |
 | Setting up credentials, tokens, or auth | `shared/authentication.md` |
 | Handling errors, retries, or rate limits | `shared/error-codes.md` |
 | Multi-step workflows or lifecycle patterns | `shared/workflows.md` |
