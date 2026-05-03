@@ -5,34 +5,34 @@ description: "TRIGGER when: developer is integrating with the ACME Orders API, g
 
 **API version:** 1.2.0. Always use this version unless the user specifies otherwise.
 
-Validates and guides ACME Orders API integrations. Paste a request, code snippet, or describe what you're building — I'll fetch the relevant file and validate or guide.
+Validates and guides ACME Orders API integrations. Paste a request, code snippet, or describe what you're building — I'll read the relevant file and validate or guide.
 
-**IMPORTANT:** Before validating any request or code, fetch the relevant file URL below using your web browsing capability. Do not validate without first retrieving the file content.
+**IMPORTANT:** Before validating any request or code, read the relevant file from the table below. Do not validate without first reading the file content.
 
 ## What Are You Building?
 
-| Building... | Fetch this URL |
+| Building... | Read this file |
 |---|---|
-| Creating a new customer | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/endpoints/POST-v1-customers.md` |
-| Listing or searching customers | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/endpoints/GET-v1-customers.md` |
-| Retrieving a single customer | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/endpoints/GET-v1-customers-{customer_id}.md` |
-| Updating a customer | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/endpoints/PATCH-v1-customers-{customer_id}.md` |
-| Deleting a customer | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/endpoints/DELETE-v1-customers-{customer_id}.md` |
-| Creating a new order | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/endpoints/POST-v1-orders.md` |
-| Listing or filtering orders | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/endpoints/GET-v1-orders.md` |
-| Retrieving a single order | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/endpoints/GET-v1-orders-{order_id}.md` |
-| Updating order status or fields | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/endpoints/PATCH-v1-orders-{order_id}.md` |
-| Cancelling an order | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/endpoints/DELETE-v1-orders-{order_id}.md` |
-| Setting up credentials, tokens, or auth | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/shared/authentication.md` |
-| Handling errors, retries, or rate limits | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/shared/error-codes.md` |
-| Multi-step workflows or lifecycle patterns | `https://raw.githubusercontent.com/rsdighe76/api-best-practice-skill-creator-tests/master/acme-orders-best-practices/shared/workflows.md` |
+| Creating a new customer | `endpoints/POST-v1-customers.md` |
+| Listing or searching customers | `endpoints/GET-v1-customers.md` |
+| Retrieving a single customer | `endpoints/GET-v1-customers-{customer_id}.md` |
+| Updating a customer | `endpoints/PATCH-v1-customers-{customer_id}.md` |
+| Deleting a customer | `endpoints/DELETE-v1-customers-{customer_id}.md` |
+| Creating a new order | `endpoints/POST-v1-orders.md` |
+| Listing or filtering orders | `endpoints/GET-v1-orders.md` |
+| Retrieving a single order | `endpoints/GET-v1-orders-{order_id}.md` |
+| Updating order status or fields | `endpoints/PATCH-v1-orders-{order_id}.md` |
+| Cancelling an order | `endpoints/DELETE-v1-orders-{order_id}.md` |
+| Setting up credentials, tokens, or auth | `shared/authentication.md` |
+| Handling errors, retries, or rate limits | `shared/error-codes.md` |
+| Multi-step workflows or lifecycle patterns | `shared/workflows.md` |
 
 ## When to Load Which File
 
-- **Auth setup, 401 errors** → fetch `shared/authentication.md` URL above
-- **Error codes, retry logic, 429 handling** → fetch `shared/error-codes.md` URL above
-- **Multi-step workflows, pagination, order lifecycle** → fetch `shared/workflows.md` URL above
-- **Any specific endpoint** → fetch the matching URL from the table above
+- **Auth setup, 401 errors** → read `shared/authentication.md`
+- **Error codes, retry logic, 429 handling** → read `shared/error-codes.md`
+- **Multi-step workflows, pagination, order lifecycle** → read `shared/workflows.md`
+- **Any specific endpoint** → read the matching file from the table above
 
 Validate a **single request (curl/JSON)** → check request structure only.
 Validate **full code** → check request + error handling + retries + timeouts.
