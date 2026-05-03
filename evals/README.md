@@ -11,6 +11,8 @@ Each file in this directory contains a **deliberately broken** request or code s
 
 ## Eval files
 
+### Single-endpoint evals
+
 | File | What's broken |
 |------|--------------|
 | `POST-orders-missing-idempotency-key.md` | No `Idempotency-Key` header |
@@ -21,6 +23,14 @@ Each file in this directory contains a **deliberately broken** request or code s
 | `POST-orders-retry-on-400.py` | Retries all errors including non-retryable 400s |
 | `GET-orders-no-pagination.py` | Stops after first page, misses remaining orders |
 | `DELETE-customers-no-confirmation.py` | Bulk-deletes customers with no guard |
+
+### Workflow evals
+
+| File | What's broken |
+|------|--------------|
+| `WORKFLOW-checkout-no-dedup.py` | Full checkout skips customer dedup check; key not stored before call |
+| `WORKFLOW-delete-customer-no-cleanup.py` | Deletes customer without cancelling open orders first |
+| `WORKFLOW-lifecycle-wrong-order.py` | Skips required `paid` state; no status check before transition; key not stored |
 
 ## Pass criteria
 
