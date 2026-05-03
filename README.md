@@ -1,6 +1,6 @@
 # API Best Practice Skill Creator — Tests
 
-Test fixtures and eval checklist for [api-best-practice-skill-creator](../api-best-practice-skill-creator).
+Test fixtures and eval checklist for [api-best-practice-skill-creator](https://github.com/rsdighe76/claude-skills).
 
 ## Structure
 
